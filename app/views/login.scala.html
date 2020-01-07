@@ -1,0 +1,101 @@
+@(response: String)
+@main("Welcome to Nexxo Login page") {
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="container-fluid">
+    <h1 style="color:black;text-align:center; margin: 5% 35% 0% 35%;background-color:Black;color:white">Login Here</h1>
+    <div  style="margin: 0% 35% 20% 35%; background-color:lightgrey">
+        <form method="POST" action="/login" name="registration" id="registration">
+            <br>
+
+            <div class="form-group"  style=" margin:5%">
+                <label for="email">Enter your email:</label>
+                <input type="text" class="form-control" id="email"  name="email" />
+            </div>
+
+            <div class="form-group"  style=" margin:5%">
+                <label for="email">Enter password:</label>
+                <input type="password" class="form-control" id="password"   name="password" />
+            </div>
+
+            <br>
+            <div align="center">
+
+                <input type="submit" value="Login" id="login" style="align:center" class="btn btn-success"></input><br><br>
+            </div>
+
+        </form>
+
+        <div align="center">
+            <form action="/register" method="GET" >
+                <input type="submit" value="Register here, if unregistered" class="btn btn-success" >
+                <div>@response</div>
+                <br>
+            </form>
+
+            <form action="/forgotpassword" method="GET" >
+                <input type="submit" value="Forgot Password" class="btn btn-success" >
+                <div>@response</div>
+                <br>
+            </form>
+
+
+            <!--        <a href="/forgotpassword"  >Forgot Password</a>-->
+
+        </div>
+        <br>
+
+    </div>
+</div>
+    <script language='javascript' type='text/javascript'>
+
+    $(document).ready(function(){
+       $('#login').click(function(){
+       loginData();
+       });
+
+       function loginData(){
+          var email= $('input#email').val();
+          var password= $('input#password').val();
+
+          $.ajax({
+             url : '/login',
+             dataType : 'JSON',
+             type: "POST",
+            data:{
+                'email': email,
+                'password': password
+                },
+              success: function (data) {
+
+                if (data.status == 200){
+                    alert(data.reason);
+                    window.location.href = "/attendance";   <!-- to redirect-->
+                }
+                 else if(data.status == 400){
+                 alert(data.reason);
+                 }else {
+                      alert(data.reason) ;
+                     }
+
+
+              },
+            error: function (data) {
+                console.log(" error"+ data);
+            }
+});
+}
+});
+</script>
+</body>
+</html>
+}

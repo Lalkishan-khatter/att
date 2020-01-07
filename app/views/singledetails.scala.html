@@ -1,0 +1,24 @@
+@(attendance: List[Attendance])
+@main("Welcome to Play") {
+<html>
+<body>
+
+<div align="center" style="border-style:solid; border-width:1px; margin:10% auto; width:701px; background-color:lightgrey">
+
+    <h1>Hi Admin </h1>
+    <h2> Please find the details of Attendance here</h2>
+    <br>
+    <table>
+        <tr><th> ID </th><th> &nbsp &nbsp Check-in Time</th><th> Check-out Time</th></tr>
+        @for(n <- attendance){
+        <tr><td> @n.getId</td>   <td>&nbsp &nbsp &nbsp &nbsp @n.getCheckIn</td>  <td>&nbsp &nbsp &nbsp &nbsp @n.getCheckOut</td></tr>
+        }
+    </table>
+    <div>
+        <input type="button" value="Return to previous page" style="align=center" onclick="window.location.href = '/login';">
+        <br><br>
+    </div>
+</div>
+</body>
+</html>
+}

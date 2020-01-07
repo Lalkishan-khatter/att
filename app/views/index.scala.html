@@ -1,0 +1,48 @@
+@(response: String)
+@main("Welcome to Play") {
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="container-fluid">
+    <div align="center" style="border-style:solid; border-width:1px; margin:5% 35%; background-color:lightgrey">
+        <form method="POST" action="/attendance" name="myForm" id="myForm">
+            <h1> Enter your e-mail </h1>
+            <div>Hello (@session.get("sessionemail")), </div>
+            <br>
+
+
+            <div class="form-group" style=" margin:5%">
+                <label for="email">  kindly mark your your attendance by entering your email again</label>
+                <input type="text" class="form-control" id="email" name="email" pattern="([0-9]"/>
+            </div>
+
+
+            <input type="submit" value="Submit Attendance" class="btn btn-success"></input>
+            &nbsp&nbsp&nbsp
+            <br><br>
+        </form>
+        <div>@response</div>
+        <br>
+        <!--    <br>-->
+        <!--    <form method="POST" action="/singledetails">-->
+        <!--        <input type="submit" value="see your attendance details here" style="align=center" >-->
+        <!--        <br><br>-->
+        <!--    </form>-->
+        <div>
+            <input type="button" value="Log-out" class="btn btn-success" onclick="window.location.href = '/logout';">
+            <br><br>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
+}

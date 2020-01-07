@@ -1,0 +1,32 @@
+@startuml
+skinparam usecase {
+	BackgroundColor DarkSeaGreen
+	BorderColor DarkSlateGray
+
+	BackgroundColor<< Main >> YellowGreen
+	BorderColor<< Main >> YellowGreen
+
+	ArrowColor Olive
+	ActorBorderColor black
+	ActorFontName Courier
+
+	}
+left to right direction
+skinparam packageStyle rectangle
+actor Admin
+actor Employee
+rectangle Login {
+  Admin --> (Enter Your Email)
+   Admin --> (Enter Your Password)
+   (Enter Your Email) .>(Enter Your Password)
+   (Login)<.(Enter Your Password):After Validation
+
+
+Admin --> (Register Here If Not Register)
+Admin --> (Forgot Password)
+ (Enter Your Email) <-- Employee
+  (Enter Your Password) <-- Employee
+   (Register Here If Not Register) <-- Employee
+    (Forgot Password) <-- Employee
+
+@enduml

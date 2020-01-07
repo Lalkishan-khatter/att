@@ -1,0 +1,45 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# An example controller showing a sample home page
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET     /                           controllers.HomeController.base
+GET     /home                     controllers.RegistrationController.home
+
+GET     /register                     controllers.RegistrationController.index
+POST    /register                 controllers.RegistrationController.saveRegistration(request: Request)
+
+GET     /login                        controllers.LoginController.index
+POST    /login                        controllers.LoginController.saveLogin(request: Request)
+
+GET     /persondetails                   controllers.HomeController.HRindex(request: Request)
+POST     /persondetails                   controllers.HomeController.saveAttendance(request: Request)
+
+POST     /alldetails                   controllers.HomeController.persondetails(request: Request)
+
+#POST     /singledetails                   controllers.HomeController.singlepersondetails(request: Request)
+
+GET     /attendance                   controllers.HomeController.index(request: Request)
+POST    /attendance                   controllers.HomeController.saveAttendance(request: Request)
+
+GET     /logout                       controllers.LoginController.logout(request: Request)
+
+GET     /forgotpassword                       controllers.LoginController.forgotpassword(request: Request)
+
+POST     /getpassword                    controllers.LoginController.getpassword(request: Request)
+
+GET    /editdetails                   controllers.HomeController.editdetails(request: Request)
+POST    /editdetails                   controllers.HomeController.edited(request: Request)
+
+
+
+GET     /footballs                      controllers.FootballController.showPage(request: Request)
+GET     /footballs1                      controllers.FootballController.showPage1(request: Request)
+GET     /footballs2                    controllers.FootballController.showPage2(request: Request)
+GET     /footballs3                  controllers.FootballController.showPage3(request: Request)
+
+
+
+GET     /data                      controllers.FootballController.data(request: Request)

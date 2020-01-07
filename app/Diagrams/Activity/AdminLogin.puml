@@ -1,0 +1,18 @@
+@startuml
+
+title Admin login Acttivity Diagram
+(*) --> "Enter Email"
+If "Email is valid" then
+-->  "Login"
+(*) --> "Enter Password"
+If "password is valid" then
+-->  "Login"
+--> "Enter Email Again"
+If "Email is valid" then
+-->  "Submit Attendance"
+--> "Log-Out"
+"Login" --> "View All Attendance"
+--> "Log-Out"
+Endif
+-->(*)
+@enduml

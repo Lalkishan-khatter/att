@@ -1,0 +1,16 @@
+@startuml
+
+title Employee login Activity Diagram
+(*) --> "Enter Email"
+If "Email is valid" then
+-->  "Login"
+(*) --> "Enter Password"
+If "password is valid" then
+-->  "Login"
+--> "Enter Email Again"
+If "Email is valid" then
+-->  "Submit Attendance"
+--> "logout"
+Endif
+-->(*)
+@enduml

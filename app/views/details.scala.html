@@ -1,0 +1,35 @@
+@(attendance: List[dto.PersonAttendance])
+@main("Welcome to Play") {
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="container-fluid"   align="center" style="border-style:solid; border-width:1px; margin:10% auto; width:701px; background-color:lightgrey">
+
+        <h1>Hi Admin </h1>
+        <h2> Please find the details of Attendance here</h2>
+        <br>
+        <table class="table">
+            <thead class="thead-dark">
+            <tr ><th > ID </th><th> Name </th><th> &nbsp &nbsp &nbsp Check-in Time</th><th> &nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbspCheck-out Time</th></tr>
+            <thead class="thead-dark">
+            @for(n <- attendance){
+            <tr><td> @n.getId</td> <td> @n.getName</td>   <td>  &nbsp @n.getCheckIn</td>  <td>&nbsp &nbsp &nbsp @n.getCheckOut</td></tr>
+            }
+        </table>
+        <div>
+            <input type="button" value="Return to previous page" class="btn btn-success" onclick="window.location.href = '/login';">
+            <br><br>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+}

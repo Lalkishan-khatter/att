@@ -1,0 +1,25 @@
+@startuml
+
+
+title Registration Activity Diagram
+(*) --> "Enter Email"
+
+If "If email is valid" then
+-->  "Register"
+else
+--> "Enter Email"
+
+(*) --> "Enter Name"
+If "If Name is valid" then
+-->  "Register"
+else
+--> "Enter Name"
+
+(*) --> "Enter Password"
+If "If Password is valid" then
+-->  "Register"
+
+Endif
+-->(*)
+
+@enduml

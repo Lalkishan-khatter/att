@@ -1,0 +1,501 @@
+@()
+@main("Welcome to Play") {
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <style>
+
+
+
+/*
+    DEMO STYLE
+*/
+
+*/
+
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: #fafafa;
+}
+
+p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
+}
+
+a, a:hover, a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.navbar {
+    padding: 15px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 40px 0;
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+    perspective: 1500px;
+}
+
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background: #7386D5;
+    color: #fff;
+    transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
+    transform-origin: bottom left;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+    transform: rotateY(100deg);
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #6d7fcc;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #47748b;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+#sidebar ul li a:hover {
+    color: #7386D5;
+    background: #fff;
+}
+
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+    color: #fff;
+    background: #6d7fcc;
+}
+
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #6d7fcc;
+}
+
+ul.CTAs {
+    padding: 20px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+a.download {
+    background: #fff;
+    color: #7386D5;
+}
+
+a.article, a.article:hover {
+    background: #6d7fcc !important;
+    color: #fff !important;
+}
+
+
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+#content {
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+
+#sidebarCollapse {
+    width: 40px;
+    height: 40px;
+    background: #f5f5f5;
+    cursor: pointer;
+}
+
+#sidebarCollapse span {
+    width: 80%;
+    height: 2px;
+    margin: 0 auto;
+    display: block;
+    background: #555;
+    transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
+    transition-delay: 0.2s;
+}
+
+#sidebarCollapse span:first-of-type {
+    transform: rotate(45deg) translate(2px, 2px);
+}
+#sidebarCollapse span:nth-of-type(2) {
+    opacity: 0;
+}
+#sidebarCollapse span:last-of-type {
+    transform: rotate(-45deg) translate(1px, -1px);
+}
+
+
+#sidebarCollapse.active span {
+    transform: none;
+    opacity: 1;
+    margin: 5px auto;
+}
+
+
+
+
+</style>
+</head>
+<body>
+<div> Hello </div>
+<figure class="highcharts-figure">
+
+    <div id="graph"></div>
+
+    <div id="graph1"></div>
+    <div id="graph2"></div>
+    <div id="graph3"></div>
+
+    <p align="center">
+         of Studying
+    </p>
+</figure>
+<script>
+$(document).ready(function(){
+$.ajax({
+url: '/footballs', <!-- url for saving-->
+dataType: 'JSON',
+type: "GET",
+success: function (data) {
+showGraph(data.name, data.value);
+},
+error: function (data) {
+console.log(" error"+ data);
+}
+});
+});
+function showGraph(jsonDataNames, jsonDataValues){
+Highcharts.chart('graph', {
+chart: {
+type: 'column'
+},
+title: {
+text: 'Away team score when they won'
+},
+subtitle: {
+text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Google Play Store</a>'
+},
+xAxis: {
+type: 'category ',
+categories: jsonDataNames,
+labels: {
+rotation: -45,
+style: {
+fontSize: '13px',
+fontFamily: 'Verdana, sans-serif'
+}
+}
+},
+yAxis: {
+min: 0,
+title: {
+text: 'No of Goals'
+}
+},
+legend: {
+enabled: false
+},
+tooltip: {
+pointFormat: 'No of Goals <b>{point.y:.1f} </b> '
+},
+series: [{
+name: "values",
+data: jsonDataValues,
+dataLabels: {
+enabled: true,
+rotation: -90,
+color: '#FFFFFF',
+align: 'right',
+format: '{point.y:.1f}', // one decimal
+y: 10, // 10 pixels down from the top
+style: {
+fontSize: '13px',
+fontFamily: 'Verdana, sans-serif'
+}
+}
+}]
+});
+}
+
+/////////////////////////////////////
+
+
+
+$(document).ready(function(){
+$.ajax({
+url: '/footballs1', <!-- url for saving-->
+dataType: 'JSON',
+type: "GET",
+success: function (data) {
+showGraph1(data.name, data.value);
+},
+error: function (data) {
+console.log(" error"+ data);
+}
+});
+});
+function showGraph1(jsonDataNames, jsonDataValues){
+Highcharts.chart('graph1', {
+chart: {
+type: 'column'
+},
+title: {
+text: 'home team score when they won '
+},
+subtitle: {
+text: ''
+},
+xAxis: {
+type: 'category ',
+categories: jsonDataNames,
+labels: {
+rotation: -45,
+style: {
+fontSize: '13px',
+fontFamily: 'Verdana, sans-serif'
+}
+}
+},
+yAxis: {
+min: 0,
+title: {
+text: 'No of Goals'
+}
+},
+legend: {
+enabled: false
+},
+tooltip: {
+pointFormat: 'No of Goals <b>{point.y:.1f} </b> '
+},
+series: [{
+name: "values",
+data: jsonDataValues,
+dataLabels: {
+enabled: true,
+rotation: -90,
+color: '#FFFFFF',
+align: 'right',
+format: '{point.y:.1f}', // one decimal
+y: 10, // 10 pixels down from the top
+style: {
+fontSize: '13px',
+fontFamily: 'Verdana, sans-serif'
+}
+}
+}]
+});
+}
+/////////////////////////////////////////////
+
+
+
+$(document).ready(function(){
+$.ajax({
+url: '/footballs2', <!-- url for saving-->
+dataType: 'JSON',
+type: "GET",
+success: function (data) {
+showGraph9(data.name, data.value);
+},
+error: function (data) {
+console.log(" error"+ data);
+}
+});
+});
+function showGraph9(jsonDataNames, jsonDataValues){
+Highcharts.chart('graph2', {
+chart: {
+type: 'column'
+},
+title: {
+text: 'Total matches Played By England In Differrent Tournament'
+},
+subtitle: {
+text: ''
+},
+xAxis: {
+type: 'category ',
+categories: jsonDataNames,
+labels: {
+rotation: -45,
+style: {
+fontSize: '13px',
+fontFamily: 'Verdana, sans-serif'
+}
+}
+},
+yAxis: {
+min: 0,
+title: {
+text: 'No of matches'
+}
+},
+legend: {
+enabled: false
+},
+tooltip: {
+pointFormat: 'No of Matches <b>{point.y:.1f} </b> '
+},
+series: [{
+name: "values",
+data: jsonDataValues,
+dataLabels: {
+enabled: true,
+rotation: -90,
+color: '#FFFFFF',
+align: 'right',
+format: '{point.y:.1f}', // one decimal
+y: 10, // 10 pixels down from the top
+style: {
+fontSize: '13px',
+fontFamily: 'Verdana, sans-serif'
+}
+}
+}]
+});
+}
+
+<!--/////////////////////////////////////////-->
+$(document).ready(function(){
+$.ajax({
+url: '/footballs3', <!-- url for saving-->
+dataType: 'JSON',
+type: "GET",
+success: function (data) {
+showGraph10(data.name, data.value);
+},
+error: function (data) {
+console.log(" error"+ data);
+}
+});
+});
+function showGraph10(jsonDataNames, jsonDataValues){
+Highcharts.chart('graph3', {
+chart: {
+type: 'column'
+},
+title: {
+text: 'Total Matches Played by Scotland in Different Tournaments'
+},
+subtitle: {
+text: ''
+},
+xAxis: {
+type: 'category ',
+categories: jsonDataNames,
+labels: {
+rotation: -45,
+style: {
+fontSize: '13px',
+fontFamily: 'Verdana, sans-serif'
+}
+}
+},
+yAxis: {
+min: 0,
+title: {
+text: 'No of Matches'
+}
+},
+legend: {
+enabled: false
+},
+tooltip: {
+pointFormat: 'No of Matches <b>{point.y:.1f} </b> '
+},
+series: [{
+name: "values",
+data: jsonDataValues,
+dataLabels: {
+enabled: true,
+rotation: -90,
+color: '#FFFFFF',
+align: 'right',
+format: '{point.y:.1f}', // one decimal
+y: 10, // 10 pixels down from the top
+style: {
+fontSize: '13px',
+fontFamily: 'Verdana, sans-serif'
+}
+}
+}]
+});
+}
+</script>
+</body>
+</html>
+}
